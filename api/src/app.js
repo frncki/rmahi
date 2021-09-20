@@ -2,6 +2,7 @@ import 'dotenv/config';
 import cors from 'cors';
 import express from 'express';
 import { encodeImgName, decodeImgName } from './hashing';
+import { removeExif } from './exifRemoving';
 
 const app = express();
 
@@ -13,6 +14,8 @@ app.use(express.urlencoded({ extended: true }))
 app.get('/', (req, res) => {
   let ciphertext = encodeImgName('zdjecie_profesorka.bmp');
   let originalText = decodeImgName(ciphertext);
+
+  removeExif('public/profile_picture.jpg');
   
   console.log(ciphertext);
   console.log(originalText);
