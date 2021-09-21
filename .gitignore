@@ -7,3 +7,5 @@
 api/public/
 
 *.jpg
+
+.idea/
