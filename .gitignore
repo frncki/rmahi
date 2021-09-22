@@ -9,3 +9,5 @@ api/public/
 *.jpg
 
 .idea/
+
+client/.env

@@ -7,8 +7,8 @@ function App() {
   return (
     <div>
       <Header />
-      <Button />
-      <Button />
+      <Button type="upload" />
+      <Button type="download" />
     </div>
   );
 }

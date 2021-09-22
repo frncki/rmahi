@@ -1,12 +1,18 @@
-.btn{
+.btn-body {
+  margin: 3vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn {
   position: relative;
   display: inline-flex;
   width: 180px;
   height: 55px;
-  margin-top: 9vw;
   perspective: 1000px;
 }
-.btn a{
+.btn-a {
   transform-style: preserve-3d;
   transform: translateZ(-25px);
   transition: transform .25s;
@@ -16,28 +22,53 @@
   font-weight: 700;
   
 }
-.btn a:before,
-.btn a:after{
+.btn-a:before,
+.btn-a:after {
   position: absolute;
-  content: "Wrzuć obrazki";
   height: 55px;
   width: 180px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 5px solid black;
   box-sizing: border-box;
   border-radius: 5px;
 }
-.btn a:before{
-  color: #fff;
-  background: #000;
+.btn-a:before {
   transform: rotateY(0deg) translateZ(25px);
 }
-.btn a:after{
-  color: #000;
+.btn-a:after {
   transform: rotateX(90deg) translateZ(25px);
 }
-.btn a:hover{
+.btn-a:hover {
   transform: translateZ(-25px) rotateX(-90deg);
+}
+
+.btn-a.upload:before,
+.btn-a.upload:after {
+  border: 5px solid #fdfd96;
+  content: 'Wrzuć obrazki';
+}
+
+.btn-a.upload:before {
+  color: #212121;
+  background: #fdfd96;
+}
+
+.btn-a.upload:after {
+  color: #fdfd96;
+}
+
+.btn-a.download:before,
+.btn-a.download:after {
+  border: 5px solid #9696fd;
+  content: 'Ściągnij obrazki';
+}
+
+.btn-a.download:before {
+  color: #212121;
+  background: #9696fd;
+}
+
+.btn-a.download:after {
+  color: #9696fd;
 }
