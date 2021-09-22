@@ -1,13 +1,13 @@
 {
-  "name": "expressjs-basic-setup",
-  "version": "0.0.1",
-  "description": "Express.js basic setup to fork from",
+  "name": "rmahi",
+  "version": "0.1.0",
+  "description": "Simple Express.js server that removes metadata from images and hashes their names",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon --exec babel-node src/app.js",
+    "start": "nodemon --exec babel-node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Franciszek Mirecki, courtesy of rwieruch articles",
+  "author": "Franciszek Mirecki",
   "license": "MIT",
   "dependencies": {
     "cors": "^2.8.5",
