@@ -27,6 +27,7 @@ router.post('/', upload.array('multipleImages'), (req, res) => {
 });
 //=================================================================================================================================================
 const img = (data) => {
+  //console.log(data);
   const reg = /^data:image\/([\w+]+);base64,([\s\S]+)/;
   const match = data.match(reg);
   const baseType = {
@@ -48,25 +49,22 @@ const img = (data) => {
 }
 
 const imgSync = async (data, destpath, name) => {
-  try {
-    const result = img(data);
-    const filepath = path.join(destpath, name + result.extname);
-    await fs.writeFileSync(filepath, result.base64, { encoding: 'base64' });
-  } catch (e) {
-    console.log(e)
-  }
+  const result = img(data);
+  const filepath = path.join(destpath, name);
+  await fs.writeFileSync(filepath, result.base64, { encoding: 'base64' });
 
   return filepath;
 };
 
 // Route Controller for uploading base64 image file
 router.post('/base64', async (req, res) => {
+  let data = req.body;
+
   try {
-    for (const reqImage in req.body) {
-      console.log(reqImage)
-      const { base64Image, fileName } = reqImage;
+    data.forEach(async (imageData) => {
+      const { base64Image, fileName } = imageData;
       await imgSync(base64Image, savingDirPath, fileName)
-    }
+    });
 
     res.status(200).send({ message: 'Files uploaded successfully.' });
   } catch (err) {
