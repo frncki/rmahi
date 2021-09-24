@@ -8,6 +8,18 @@ const router = express.Router();
 const savingDirPath = path.join(__dirname, '../public/images')
 const outDirPath = path.join(__dirname, '../public/out')
 
+const makeDir = (path) => {
+  return new Promise(() => {
+    fs.mkdir(path, { recursive: true }, function (err) {
+      if (err) {
+        throw new Error(err);
+      } else {
+        console.log("New directory successfully created.")
+      }
+    })
+  });
+}
+
 const img = (data) => {
   const reg = /^data:image\/([\w+]+);base64,([\s\S]+)/;
   const match = data.match(reg);
@@ -27,36 +39,26 @@ const imgSync = (data, destpath, name) => {
   return filepath;
 };
 
+const writeImages = (imagesData, newIdSavingPath) => {
+  imagesData.forEach((imageData) => {
+    const { base64Image, fileName } = imageData;
+    imgSync(base64Image, newIdSavingPath, fileName)
+  });
+}
+
 // Route Controller for uploading base64 image file
-router.post('/base64', async (req, res) => {
+router.post('/base64', (req, res) => {
   const imagesData = req.body.base64Files;
   const requestID = req.body.id;
   const newIdSavingPath = path.join(savingDirPath, requestID);
   const newIdOutPath = path.join(outDirPath, requestID);
 
-  fs.mkdir(newIdSavingPath, { recursive: true }, function(err) {
-    if (err) {
-      console.log(err)
-    } else {
-      console.log("New directory successfully created.")
-    }
-  })
-
-  fs.mkdir(newIdOutPath, { recursive: true }, function(err) {
-    if (err) {
-      console.log(err)
-    } else {
-      console.log("New directory successfully created.")
-    }
-  })
-
   try {
-    imagesData.forEach(async (imageData) => {
-      const { base64Image, fileName } = imageData;
-      imgSync(base64Image, newIdSavingPath, fileName)
-    });
-
-    //processImages(requestID);
+    makeDir(newIdSavingPath)
+      .then(writeImages(imagesData, newIdSavingPath))
+      .then(makeDir(newIdOutPath))
+      .then(processImages(requestID))
+      .catch((err) => console.log(err));
 
     res.status(200).send({ message: 'Files uploaded successfully.' });
   } catch (err) {
