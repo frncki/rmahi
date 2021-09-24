@@ -4,6 +4,7 @@ import Button from '../Button/Button';
 import React, { useState, useRef } from 'react';
 import AppDataContext from "../../context/AppDataContext";
 import axios from 'axios';
+import { v4 as uuid } from 'uuid'; 
 
 const Upload = ({ type }) => {
     const appContext = React.useContext(AppDataContext);
@@ -22,6 +23,7 @@ const Upload = ({ type }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        const id = uuid();
         for (const image of appContext.files) {
             const base64 = await createBase64Image(image);
             setBase64Files(base64Files => base64Files.concat({
@@ -30,7 +32,10 @@ const Upload = ({ type }) => {
             }));
         }
         if (base64Files.length > 0) {
-            axios.post('api/images/base64', base64Files)
+            axios.post('api/images/base64', {
+                id: id,
+                base64Files: base64Files
+            })
                 .then(data => appContext.setMessage(data.data.message))
                 .catch((error) => appContext.setMessage('Error'));
             setBase64Files([]);
