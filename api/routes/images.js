@@ -1,5 +1,4 @@
 import express from "express";
-import multer from "multer";
 import path from 'path';
 import fs from 'fs';
 import { processImages } from "../public/js/exifRemoving";
@@ -8,25 +7,7 @@ const router = express.Router();
 
 const savingDirPath = path.join(__dirname, '../public/images')
 const outDirPath = path.join(__dirname, '../public/out')
-// Create Upload Instace to use in route middlware
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, savingDirPath),
-  filename: (req, file, cb) => cb(null, file.originalname)
-})
-const upload = multer({ storage: storage });
 
-router.get('/', (req, res) => {
-  return res.send('Images');
-});
-
-router.post('/', upload.array('multipleImages'), (req, res) => {
-  try {
-    res.status(200).send({ message: 'Files uploaded successfully.' });
-  } catch (err) {
-    res.status(400).send({ message: 'Error uploading file.' });
-  }
-});
-//=================================================================================================================================================
 const img = (data) => {
   const reg = /^data:image\/([\w+]+);base64,([\s\S]+)/;
   const match = data.match(reg);
