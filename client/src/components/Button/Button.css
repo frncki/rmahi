@@ -43,32 +43,47 @@
   transform: translateZ(-25px) rotateX(-90deg);
 }
 
+.btn-a.attach:before,
+.btn-a.attach:after {
+  border: 5px solid #e94029; /*f0bf6e*/
+  content: 'Wrzuć obrazki';
+}
+
+.btn-a.attach:before {
+  color: #212121;
+  background: #e94029;
+}
+
+.btn-a.attach:after {
+  color: #e94029;
+}
+
 .btn-a.upload:before,
 .btn-a.upload:after {
-  border: 5px solid #fdfd96;
-  content: 'Wrzuć obrazki';
+  border: 5px solid #3aaff7; /*8492fa*/
+  content: 'Prześlij obrazki';
 }
 
 .btn-a.upload:before {
   color: #212121;
-  background: #fdfd96;
+  background: #3aaff7;
 }
 
 .btn-a.upload:after {
-  color: #fdfd96;
+  color: #3aaff7;
 }
 
 .btn-a.download:before,
 .btn-a.download:after {
-  border: 5px solid #9696fd;
+  border: 5px solid #31aeaa; /*5a9ad1*/
   content: 'Ściągnij obrazki';
 }
 
 .btn-a.download:before {
   color: #212121;
-  background: #9696fd;
+  background: #31aeaa;
 }
 
 .btn-a.download:after {
-  color: #9696fd;
+  color: #31aeaa;
 }
