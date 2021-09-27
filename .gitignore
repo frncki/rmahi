@@ -4,9 +4,12 @@
 /client/node_modules
 
 /api/.env
-api/public/
+api/public/images
+api/public/out
 
 *.jpg
+*.jpeg
+*.png
 
 .idea/
 
