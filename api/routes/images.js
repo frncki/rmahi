@@ -8,18 +8,6 @@ const router = express.Router();
 const savingDirPath = path.join(__dirname, '../public/images')
 const outDirPath = path.join(__dirname, '../public/out')
 
-const makeDir = (path) => {
-  return new Promise(() => {
-    fs.mkdir(path, { recursive: true }, function (err) {
-      if (err) {
-        throw new Error(err);
-      } else {
-        console.log("New directory successfully created.")
-      }
-    })
-  });
-}
-
 const img = (data) => {
   const reg = /^data:image\/([\w+]+);base64,([\s\S]+)/;
   const match = data.match(reg);
@@ -54,9 +42,11 @@ router.post('/base64', (req, res) => {
   const newIdOutPath = path.join(outDirPath, requestID);
 
   try {
-    makeDir(newIdSavingPath)
+    fs.promises.mkdir(newIdSavingPath)
       .then(writeImages(imagesData, newIdSavingPath))
-      .then(makeDir(newIdOutPath))
+      .catch((err) => console.log(err));
+
+    fs.promises.mkdir(newIdOutPath)
       .then(processImages(requestID))
       .catch((err) => console.log(err));
 
