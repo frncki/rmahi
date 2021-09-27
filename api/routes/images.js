@@ -5,10 +5,10 @@ import { processImages } from "../public/js/exifRemoving";
 
 const router = express.Router();
 
-const savingDirPath = path.join(__dirname, '../public/images')
-const outDirPath = path.join(__dirname, '../public/out')
+const savingDirPath = path.join(__dirname, `../${process.env.INPUT_IMAGES}`)
+const outDirPath = path.join(__dirname, `../${process.env.OUTPUT_IMAGES}`)
 
-const img = (data) => {
+const extractBase64Data = (data) => {
   const reg = /^data:image\/([\w+]+);base64,([\s\S]+)/;
   const match = data.match(reg);
 
@@ -19,10 +19,10 @@ const img = (data) => {
   return match[2];
 }
 
-const imgSync = (data, destpath, name) => {
-  const base64Image = img(data);
+const writeBase64Image = async (data, destpath, name) => {
+  const base64Image = extractBase64Data(data);
   const filepath = path.join(destpath, name);
-  fs.writeFileSync(filepath, base64Image, { encoding: 'base64' });
+  await fs.promises.writeFile(filepath, base64Image, { encoding: 'base64' });
 
   return filepath;
 };
@@ -30,7 +30,7 @@ const imgSync = (data, destpath, name) => {
 const writeImages = (imagesData, newIdSavingPath) => {
   imagesData.forEach((imageData) => {
     const { base64Image, fileName } = imageData;
-    imgSync(base64Image, newIdSavingPath, fileName)
+    writeBase64Image(base64Image, newIdSavingPath, fileName)
   });
 }
 

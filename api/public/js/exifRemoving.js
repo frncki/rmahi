@@ -4,8 +4,9 @@ import path from 'path';
 
 import { encodeImgName, decodeImgName } from './hashing';
 
-const removeExif = (filePath, idDir, newName, fileFormat) => {
-    let newFilePath = path.join(`${process.env.OUTPUT_IMAGES}/${idDir}`, `${newName}.${fileFormat}`);
+const removeExif = (filePath, idDirName, newFileName, fileFormat) => {
+    const newDirPath = path.join(process.env.OUTPUT_IMAGES, idDirName)
+    const newFilePath = path.join(newDirPath, `${newFileName}.${fileFormat}`);
 
     const reader = fs.createReadStream(filePath);
     const writer = fs.createWriteStream(newFilePath);
@@ -20,18 +21,17 @@ const extractFileNameAndFormat = (file) => {
     return { fileName: regexMatches[1], fileFormat: regexMatches[2] };
 }
 
-const processImages = async (idDir) => {
-    let directory_name = process.env.INPUT_IMAGES;
-    let idPath = path.join(directory_name, idDir)
+const processImages = async (idDirName) => {
+    let idDirPath = path.join(process.env.INPUT_IMAGES, idDirName)
     try {
-        let filenames = await fs.promises.readdir(idPath);
+        let filenames = await fs.promises.readdir(idDirPath);
         console.log("\nFilenames in directory:");
         filenames.forEach((fileNameAndFormat) => {
             let { fileName, fileFormat } = extractFileNameAndFormat(fileNameAndFormat);
-            let filePath = path.join(idPath, fileNameAndFormat);
+            let filePath = path.join(idDirPath, fileNameAndFormat);
             let ciphertext = encodeImgName(fileName);
 
-            removeExif(filePath, idDir, fileName, fileFormat);
+            removeExif(filePath, idDirName, ciphertext, fileFormat);
 
             let decipheredText = decodeImgName(ciphertext);
             console.log(`${decipheredText}.${fileFormat}`);
