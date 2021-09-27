@@ -37,4 +37,16 @@ const extractBase64Data = (data) => {
     })
   }
 
+  const convertImagesToBase64 = (path) => {
+    const imagesNames = await fs.promises.readdir(path);
+    let base64Images = [];
+    imagesNames.forEach((image) => {
+        const base64 = await createBase64Image(image);
+        base64Images.pop({
+            base64Image: base64,
+            fileName: image
+        });
+    });
+  }
+
 export { writeImages };

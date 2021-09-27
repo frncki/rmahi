@@ -24,16 +24,16 @@ const extractFileNameAndFormat = (file) => {
 const processImages = async (idDirName) => {
     let idDirPath = path.join(process.env.INPUT_IMAGES, idDirName)
     try {
-        let filenames = await fs.promises.readdir(idDirPath);
+        const filenames = await fs.promises.readdir(idDirPath);
         console.log("\nFilenames in directory:");
         filenames.forEach((fileNameAndFormat) => {
-            let { fileName, fileFormat } = extractFileNameAndFormat(fileNameAndFormat);
-            let filePath = path.join(idDirPath, fileNameAndFormat);
-            let ciphertext = encodeImgName(fileName);
+            const { fileName, fileFormat } = extractFileNameAndFormat(fileNameAndFormat);
+            const filePath = path.join(idDirPath, fileNameAndFormat);
+            const ciphertext = encodeImgName(fileName);
 
             removeExif(filePath, idDirName, ciphertext, fileFormat);
 
-            let decipheredText = decodeImgName(ciphertext);
+            const decipheredText = decodeImgName(ciphertext);
             console.log(`${decipheredText}.${fileFormat}`);
         });
     } catch (err) {

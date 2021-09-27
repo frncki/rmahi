@@ -31,4 +31,8 @@ router.post('/base64', (req, res) => {
   }
 });
 
+router.get('base64', (req, res) => {
+  
+});
+
 module.exports = router;
