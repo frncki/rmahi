@@ -2,7 +2,7 @@ import express from "express";
 import path from 'path';
 import fs from 'fs';
 import { processImages } from "../public/js/exifRemoving";
-import { writeImages } from "../public/js/base64";
+import { writeImages, convertImagesToBase64 } from "../public/js/base64";
 
 const router = express.Router();
 
@@ -27,12 +27,22 @@ router.post('/base64', (req, res) => {
 
     res.status(200).send({ message: 'Files uploaded successfully.' });
   } catch (err) {
-    res.status(400).send({ message: 'Error uploading file.' });
+    res.status(400).send({ message: 'Error uploading files.' });
   }
 });
 
-router.get('base64', (req, res) => {
-  
+router.get('/base64/:id', async (req, res) => {
+  const requestID = req.params.id;
+  const idOutDirPath = path.join(outDirPath, requestID);
+  let base64Images = [];
+  try {
+    base64Images = await convertImagesToBase64(idOutDirPath);
+    console.log(base64Images);
+    res.status(200).send(base64Images);
+  } catch (err) {
+    console.log(err);
+    res.status(400).send({ message: 'Error getting files.' });
+  }
 });
 
 module.exports = router;
