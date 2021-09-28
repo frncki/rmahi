@@ -1,15 +1,13 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable react/jsx-no-comment-textnodes */
 import Button from '../Button/Button';
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import AppDataContext from "../../context/AppDataContext";
 import axios from 'axios';
-import { v4 as uuid } from 'uuid'; 
 
-const Upload = ({ type }) => {
+const Upload = () => {
     const appContext = React.useContext(AppDataContext);
     const [base64Files, setBase64Files] = useState([]);
-    const formRef = useRef(null);
 
     const createBase64Image = (file) => {
         const reader = new FileReader();
@@ -23,7 +21,6 @@ const Upload = ({ type }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const id = uuid();
         for (const image of appContext.files) {
             const base64 = await createBase64Image(image);
             setBase64Files(base64Files => base64Files.concat({
@@ -33,16 +30,12 @@ const Upload = ({ type }) => {
         }
         if (base64Files.length > 0) {
             axios.post('api/images/base64', {
-                id: id,
+                id: appContext.id,
                 base64Files: base64Files
             })
                 .then(data => appContext.setMessage(data.data.message))
                 .catch((error) => appContext.setMessage('Error'));
             setBase64Files([]);
-            formRef.current && formRef.current.reset();
-            setTimeout(() => {
-                appContext.setMessage('');
-            }, 4000);
         }
     }
 

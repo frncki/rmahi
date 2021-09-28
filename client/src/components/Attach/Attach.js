@@ -3,14 +3,19 @@
 import Button from '../Button/Button';
 import * as React from 'react';
 import AppDataContext from "../../context/AppDataContext";
-
+import { v4 as uuid } from 'uuid';
 const Attach = () => {
-    const filesContext = React.useContext(AppDataContext);
+    const appContext = React.useContext(AppDataContext);
     const inputRef = React.useRef(null);
     const formRef = React.useRef(null);
 
-    const handleClick = () => inputRef && inputRef.current && inputRef.current.click();
-    const handleFiles = async (e) => filesContext.setFiles(e.target.files ? Array.from(e.target.files) : []);
+    const handleClick = () => {
+        let id = uuid();
+        appContext.setID(id);
+        console.log(appContext.id);
+        inputRef && inputRef.current && inputRef.current.click()
+    };
+    const handleFiles = async (e) => appContext.setFiles(e.target.files ? Array.from(e.target.files) : []);
 
     return (
         <form ref={formRef}>

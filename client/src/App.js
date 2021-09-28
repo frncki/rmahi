@@ -4,17 +4,20 @@ import AppDataContext from "./context/AppDataContext";
 import Header from "./components/Header/Header";
 import Attach from "./components/Attach/Attach"
 import Upload from "./components/Upload/Upload"
-import Button from "./components/Button/Button"
+import Download from "./components/Download/Download";
 
 function App() {
   const [files, setFiles] = React.useState([]);
   const [message, setMessage] = React.useState('');
+  const [id, setID] = React.useState('');
 
   const initialContext = {
     files: files,
     setFiles: setFiles,
     message: message,
-    setMessage: setMessage
+    setMessage: setMessage,
+    id: id,
+    setID: setID
   }
 
   return (
@@ -22,7 +25,7 @@ function App() {
       <Header />
       <Attach />
       <Upload />
-      <Button type="download" />
+      <Download />
     </AppDataContext.Provider>
   );
 }
