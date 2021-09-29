@@ -10,6 +10,13 @@ import { saveAs } from 'file-saver';
 const Download = () => {
     const appContext = React.useContext(AppDataContext);
 
+    const formattedDate = () => {
+        let result = "";
+        const d = new Date();
+        result += d.getDate() + "." + (d.getMonth() + 1) + "." + d.getFullYear() + "_" + d.getHours() + "." + d.getMinutes() + "." + d.getSeconds();
+        return result;
+    }
+
     const zipAndSaveFiles = (filesData) => {
         const zip = new JSZip();
         var imgDirectory = zip.folder("images");
@@ -18,7 +25,7 @@ const Download = () => {
         });
         zip.generateAsync({ type: "blob" })
             .then(function (content) {
-                saveAs(content, "example.zip");
+                saveAs(content, `rmahi-${formattedDate()}-images-${filesData.length}.zip`);
             });
     }
 
@@ -27,7 +34,7 @@ const Download = () => {
             const { data } = await axios.get(`api/images/base64/${appContext.id}`);
             zipAndSaveFiles(data);
         } catch (err) {
-            console.log(err);
+            console.error(err);
             appContext.setMessage('Error! Coś poszło nie tak :(');
             appContext.setStatus('error');
             appContext.setFiles([]);

@@ -30,11 +30,11 @@ function App() {
   }
 
   const showAttach = () => {
-    return status === 'attach' || status === 'upload';
+    return status === 'attach' || status === 'upload' || status === 'download';
   }
 
   const showUpload = () => {
-    return status === 'upload';
+    return status === 'upload' || status === 'download';
   }
 
   const showDownload = () => {

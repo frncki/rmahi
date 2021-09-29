@@ -42,7 +42,7 @@ const Upload = () => {
                 appContext.setStatus('download');
                 setBase64Files([]);
             } catch (error) {
-                console.log(error);
+                console.error(error);
                 appContext.setMessage('Error! Coś poszło nie tak :(');
                 appContext.setStatus('error');
                 appContext.setFiles([]);

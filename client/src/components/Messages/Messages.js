@@ -5,19 +5,19 @@ import { CSSTransition, SwitchTransition } from "react-transition-group";
 
 const Messages = () => {
     const appContext = React.useContext(AppDataContext);
-    let msg = appContext.message;
+    const nodeRef = React.useRef(null);
+
     return (
         <div className="card-body">
             <div className={`card ${appContext.status}`}>
                 <SwitchTransition mode="out-in">
                     <CSSTransition
                         classNames="fade"
-                        addEndListener={(node, done) => {
-                            node.addEventListener("transitionend", done, false);
-                        }}
-                        key={msg}
+                        nodeRef={nodeRef}
+                        timeout={200} 
+                        key={appContext.message}
                     >
-                        <p className="message">{msg}</p>
+                        <p ref={nodeRef} className="message">{appContext.message}</p>
                     </CSSTransition>
                 </SwitchTransition>
                 <ul className="check-list">
