@@ -1,13 +1,13 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable react/jsx-no-comment-textnodes */
 import Button from '../Button/Button';
-import React, { useState } from 'react';
+import * as React from 'react';
 import AppDataContext from "../../context/AppDataContext";
 import axios from 'axios';
 
 const Upload = () => {
     const appContext = React.useContext(AppDataContext);
-    const [base64Files, setBase64Files] = useState([]);
+    const [base64Files, setBase64Files] = React.useState([]);
 
     const createBase64Image = (file) => {
         const reader = new FileReader();
