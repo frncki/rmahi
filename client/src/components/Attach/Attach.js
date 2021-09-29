@@ -9,14 +9,14 @@ const Attach = () => {
     const inputRef = React.useRef(null);
     const formRef = React.useRef(null);
 
-    const handleClick = () => {
+    const handleClick = () => inputRef && inputRef.current && inputRef.current.click();
+    const handleFiles = async (e) => {
+        await appContext.setFiles(e.target.files ? Array.from(e.target.files) : []);
         let id = uuid();
         appContext.setID(id);
-        inputRef && inputRef.current && inputRef.current.click()
         appContext.setMessage('Pliki do przesłania:');
         appContext.setStatus('upload');
     };
-    const handleFiles = async (e) => appContext.setFiles(e.target.files ? Array.from(e.target.files) : []);
 
     return (
         <form ref={formRef}>
