@@ -34,11 +34,9 @@ router.post('/base64', (req, res) => {
 router.get('/base64/:id', async (req, res) => {
   const requestID = req.params.id;
   const idOutDirPath = path.join(outDirPath, requestID);
-  let base64Images = [];
   try {
-    base64Images = await convertImagesToBase64(idOutDirPath);
-    console.log(base64Images);
-    res.status(200).send(base64Images);
+    const base64Images = await convertImagesToBase64(idOutDirPath);
+    res.status(200).send(JSON.stringify(base64Images));
   } catch (err) {
     console.log(err);
     res.status(400).send({ message: 'Error getting files.' });
