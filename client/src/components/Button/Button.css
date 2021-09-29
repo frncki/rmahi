@@ -45,7 +45,7 @@
 
 .btn-a.attach:before,
 .btn-a.attach:after {
-  border: 5px solid #e94029; /*f0bf6e*/
+  border: 5px solid #e94029;
   content: 'Wrzuć obrazki';
 }
 
@@ -60,7 +60,7 @@
 
 .btn-a.upload:before,
 .btn-a.upload:after {
-  border: 5px solid #3aaff7; /*8492fa*/
+  border: 5px solid #3aaff7;
   content: 'Prześlij obrazki';
 }
 
@@ -75,7 +75,7 @@
 
 .btn-a.download:before,
 .btn-a.download:after {
-  border: 5px solid #31aeaa; /*5a9ad1*/
+  border: 5px solid #31aeaa;
   content: 'Ściągnij obrazki';
 }
 
@@ -86,4 +86,19 @@
 
 .btn-a.download:after {
   color: #31aeaa;
+}
+
+.btn-a.reload:before,
+.btn-a.reload:after {
+  border: 5px solid #eeb557;
+  content: 'Odśwież stronę';
+}
+
+.btn-a.reload:before {
+  color: #212121;
+  background: #eeb557;
+}
+
+.btn-a.reload:after {
+  color: #eeb557;
 }

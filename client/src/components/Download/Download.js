@@ -28,7 +28,9 @@ const Download = () => {
             zipAndSaveFiles(data);
         } catch (err) {
             console.log(err);
-            appContext.setMessage('Error');
+            appContext.setMessage('Error! Coś poszło nie tak :(');
+            appContext.setStatus('error');
+            appContext.setFiles([]);
         }
     }
 

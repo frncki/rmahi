@@ -25,9 +25,9 @@ router.post('/base64', (req, res) => {
       .then(processImages(requestID))
       .catch((err) => console.log(err));
 
-    res.status(200).send({ message: 'Files uploaded successfully.' });
+    res.status(200).send({ message: 'Pliki przesłane pomyślnie!' });
   } catch (err) {
-    res.status(400).send({ message: 'Error uploading files.' });
+    res.status(400).send({ message: 'Błąd przesyłania plików.' });
   }
 });
 

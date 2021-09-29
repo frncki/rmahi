@@ -19,8 +19,7 @@ const Upload = () => {
         })
     }
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+    const convertImages = async () => {
         for (const image of appContext.files) {
             const base64 = await createBase64Image(image);
             setBase64Files(base64Files => base64Files.concat({
@@ -28,14 +27,26 @@ const Upload = () => {
                 fileName: image.name
             }));
         }
+    }
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        await convertImages();
         if (base64Files.length > 0) {
-            axios.post('api/images/base64', {
-                id: appContext.id,
-                base64Files: base64Files
-            })
-                .then(data => appContext.setMessage(data.data.message))
-                .catch((error) => appContext.setMessage('Error'));
-            setBase64Files([]);
+            try {
+                const { data } = await axios.post('api/images/base64', {
+                    id: appContext.id,
+                    base64Files: base64Files
+                })
+                appContext.setMessage(data.message);
+                appContext.setStatus('download');
+                setBase64Files([]);
+            } catch (error) {
+                console.log(error);
+                appContext.setMessage('Error! Coś poszło nie tak :(');
+                appContext.setStatus('error');
+                appContext.setFiles([]);
+            }
         }
     }
 

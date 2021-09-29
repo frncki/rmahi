@@ -12,8 +12,9 @@ const Attach = () => {
     const handleClick = () => {
         let id = uuid();
         appContext.setID(id);
-        console.log(appContext.id);
         inputRef && inputRef.current && inputRef.current.click()
+        appContext.setMessage('Pliki do przesłania:');
+        appContext.setStatus('upload');
     };
     const handleFiles = async (e) => appContext.setFiles(e.target.files ? Array.from(e.target.files) : []);
 

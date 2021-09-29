@@ -1,0 +1,58 @@
+.card-body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.message {
+    text-align: center;
+    font-size: 1.4em;
+}
+
+.card {
+    border-radius: 5px;
+    padding: 1vw;
+    color: #fff;
+    letter-spacing: 1px;
+    font-family: Arial, sans-serif;
+    font-weight: 700;
+}
+  
+.check-list {
+    margin: 0;
+    padding-left: 1.2rem;
+}
+  
+.check-list li {
+    position: relative;
+    list-style-type: none;
+    padding-left: 2.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.check-list li:before {
+    content: '';
+    display: block;
+    position: absolute;
+    left: 0;
+    top: -2px;
+    width: 5px;
+    height: 11px;
+    border-width: 0 2px 2px 0;
+    border-style: solid;
+    border-color: #31aeaa;
+    transform-origin: bottom left;
+    transform: rotate(45deg);
+}
+
+.card.upload {
+    border: 5px solid #3aaff7;
+}
+
+.card.download {
+    border: 5px solid #31aeaa;
+}
+
+.card.error {
+    border: 5px solid #e94029;
+}
