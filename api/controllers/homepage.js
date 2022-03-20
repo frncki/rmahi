@@ -36,4 +36,3 @@ const getArtworks = async (req, res = response) => {
 module.exports = {
     getArtworks,
 };
-view rawhomepage.js hosted with ❤ by GitHub
